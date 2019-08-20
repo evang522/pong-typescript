@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "plugins": [{
+            "name": "typescript-tslint-plugin",
+          }],
+        "module": "commonjs",
+        "allowJs": true,
+        "resolveJsonModule": true,
+        "esModuleInterop": true,
+        "target": "es6",
+        "noImplicitAny": true,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "baseUrl": ".",
+    },
+    "include": [
+        "src/**/*"
+    ],
+    "exclude": ["node_modules", "dist"]
+}
