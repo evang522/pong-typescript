@@ -259,7 +259,27 @@ Object.defineProperty(exports, "__esModule", {
 var PongBall_1 = __importDefault(require("./PongBall"));
 
 exports.default = PongBall_1.default;
-},{"./PongBall":"lib/Models/PongBall/PongBall.ts"}],"lib/Models/Rectangle/Rectangle.ts":[function(require,module,exports) {
+},{"./PongBall":"lib/Models/PongBall/PongBall.ts"}],"lib/Models/Vector/Vector.ts":[function(require,module,exports) {
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Vector = function Vector() {
+  var x = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+  var y = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0;
+
+  _classCallCheck(this, Vector);
+
+  this.x = x;
+  this.y = y;
+};
+
+exports.default = Vector;
+},{}],"lib/Models/Rectangle/Rectangle.ts":[function(require,module,exports) {
 "use strict";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -268,14 +288,25 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
 
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var Vector_1 = __importDefault(require("../Vector/Vector"));
+
 var Rectangle =
 /*#__PURE__*/
 function () {
-  function Rectangle(location, sizeOffset) {
+  function Rectangle() {
+    var location = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Vector_1.default();
+    var sizeOffset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Vector_1.default();
+
     _classCallCheck(this, Rectangle);
 
     this.location = location;
@@ -322,11 +353,17 @@ function () {
     key: "xOffset",
     get: function get() {
       return this.sizeOffset.x;
+    },
+    set: function set(xOffsetPx) {
+      this.sizeOffset.x = xOffsetPx;
     }
   }, {
     key: "yOffset",
     get: function get() {
       return this.sizeOffset.y;
+    },
+    set: function set(yOffsetPx) {
+      this.sizeOffset.y = yOffsetPx;
     }
   }]);
 
@@ -334,24 +371,174 @@ function () {
 }();
 
 exports.default = Rectangle;
-},{}],"lib/Models/Vector/Vector.ts":[function(require,module,exports) {
+},{"../Vector/Vector":"lib/Models/Vector/Vector.ts"}],"lib/Services/Builders/RectangleBuilder/RectangleBuilder.ts":[function(require,module,exports) {
 "use strict";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
 
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var Vector = function Vector(x, y) {
-  _classCallCheck(this, Vector);
+var Rectangle_1 = __importDefault(require("../../../Models/Rectangle/Rectangle"));
 
-  this.x = x;
-  this.y = y;
+var RectangleBuilder =
+/*#__PURE__*/
+function () {
+  function RectangleBuilder() {
+    var rect = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : new Rectangle_1.default();
+
+    _classCallCheck(this, RectangleBuilder);
+
+    this.rect = rect;
+  }
+
+  _createClass(RectangleBuilder, [{
+    key: "withLocation",
+    value: function withLocation(x, y) {
+      this.rect.x = x;
+      this.rect.y = y;
+      return this;
+    }
+  }, {
+    key: "withSizeOffset",
+    value: function withSizeOffset(x, y) {
+      this.rect.xOffset = x;
+      this.rect.yOffset = y;
+      return this;
+    }
+  }, {
+    key: "build",
+    value: function build() {
+      return this.rect;
+    }
+  }], [{
+    key: "fromDimensions",
+    value: function fromDimensions(xPos, yPos, xOffs, yOffs) {
+      var self = new this();
+      return self.withLocation(xPos, yPos).withSizeOffset(xOffs, yOffs).build();
+    }
+  }]);
+
+  return RectangleBuilder;
+}();
+
+exports.default = RectangleBuilder;
+},{"../../../Models/Rectangle/Rectangle":"lib/Models/Rectangle/Rectangle.ts"}],"lib/Services/Builders/RectangleBuilder/index.ts":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
 };
 
-exports.default = Vector;
-},{}],"lib/Services/PongGame/PongGame.ts":[function(require,module,exports) {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var RectangleBuilder_1 = __importDefault(require("./RectangleBuilder"));
+
+exports.default = RectangleBuilder_1.default;
+},{"./RectangleBuilder":"lib/Services/Builders/RectangleBuilder/RectangleBuilder.ts"}],"lib/Models/Player/Player.ts":[function(require,module,exports) {
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Vector_1 = __importDefault(require("../Vector/Vector"));
+
+var index_1 = __importDefault(require("../../Services/Builders/RectangleBuilder/index"));
+
+var Player =
+/*#__PURE__*/
+function () {
+  function Player() {
+    var shape = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : index_1.default.fromDimensions(10, 10, 20, 50);
+    var speed = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : new Vector_1.default();
+    var score = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 0;
+    var type = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 'human';
+
+    _classCallCheck(this, Player);
+
+    this.shape = shape;
+    this.speed = speed;
+    this.score = score;
+    this.type = type;
+  }
+
+  _createClass(Player, [{
+    key: "setSpeed",
+    value: function setSpeed(speedX, speedY) {
+      this.speed = new Vector_1.default(speedX, speedY);
+    }
+  }, {
+    key: "setLocation",
+    value: function setLocation(x, y) {
+      this.shape.x = x;
+      this.shape.y = y;
+    }
+  }, {
+    key: "getShape",
+    value: function getShape() {
+      return this.shape;
+    }
+  }, {
+    key: "xSpeed",
+    get: function get() {
+      return this.speed.x;
+    }
+  }, {
+    key: "ySpeed",
+    get: function get() {
+      return this.speed.y;
+    }
+  }]);
+
+  return Player;
+}();
+
+exports.default = Player;
+},{"../Vector/Vector":"lib/Models/Vector/Vector.ts","../../Services/Builders/RectangleBuilder/index":"lib/Services/Builders/RectangleBuilder/index.ts"}],"lib/Models/Player/index.ts":[function(require,module,exports) {
+"use strict";
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var Player_1 = __importDefault(require("./Player"));
+
+exports.default = Player_1.default;
+},{"./Player":"lib/Models/Player/Player.ts"}],"lib/Services/PongGame/PongGame.ts":[function(require,module,exports) {
 "use strict";
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -378,6 +565,10 @@ var Rectangle_1 = __importDefault(require("../../Models/Rectangle/Rectangle"));
 
 var Vector_1 = __importDefault(require("../../Models/Vector/Vector"));
 
+var index_2 = __importDefault(require("../../Models/Player/index"));
+
+var index_3 = __importDefault(require("../Builders/RectangleBuilder/index"));
+
 var PongGame =
 /*#__PURE__*/
 function () {
@@ -386,18 +577,29 @@ function () {
 
     _classCallCheck(this, PongGame);
 
+    this.canvasId = canvasId;
     this.lastTimestamp = 0;
 
     this.draw = function (ms) {
       _this.drawBall();
 
+      _this.drawPlayer(_this.player1);
+
+      _this.drawPlayer(_this.player2);
+
       _this.updateBallPosition(ms || 0);
+
+      _this.updatePlayer2Position();
+
+      _this.buildCenterLine();
 
       window.requestAnimationFrame(_this.draw);
     };
 
     this.canvas = this.buildCanvas(canvasId);
     this.ball = this.buildBall();
+    this.player1 = new index_2.default(index_3.default.fromDimensions(15, 155, 20, 80));
+    this.player2 = new index_2.default(index_3.default.fromDimensions(this.canvas.getRightPx() - 30, 195, 20, 80));
   }
 
   _createClass(PongGame, [{
@@ -413,14 +615,35 @@ function () {
       this.canvas.drawRect(this.ball.getShape());
     }
   }, {
+    key: "drawPlayer",
+    value: function drawPlayer(player) {
+      this.canvas.setDrawColor('white');
+      this.canvas.drawRect(player.getShape());
+    }
+  }, {
     key: "updateBallPosition",
     value: function updateBallPosition(lifeCycleMs) {
+      this.reverseBallDirectionIfOutOfBounds();
+      this.reverseBallXDirectionIfContactingPlayer();
+      var timeDiff = lifeCycleMs - this.lastTimestamp;
+      this.lastTimestamp = lifeCycleMs;
+      var adjusted = timeDiff / 900;
+      this.ball.getShape().x += this.ball.speedX * adjusted;
+      this.ball.getShape().y += this.ball.speedY * adjusted;
+    }
+  }, {
+    key: "reverseBallDirectionIfOutOfBounds",
+    value: function reverseBallDirectionIfOutOfBounds() {
       if (this.ball.getShape().getLeftSide() < this.canvas.getLeftPx()) {
-        this.ball.speedX = -this.ball.speedX;
+        // this.ball.speedX = -this.ball.speedX;
+        this.ball.speedX = 0;
+        this.ball.speedY = 0;
       }
 
       if (this.ball.getShape().getRightSide() > this.canvas.getRightPx()) {
-        this.ball.speedX = -this.ball.speedX;
+        // this.ball.speedX = -this.ball.speedX;
+        this.ball.speedX = 0;
+        this.ball.speedY = 0;
       }
 
       if (this.ball.getShape().getTopSide() < 0) {
@@ -430,17 +653,63 @@ function () {
       if (this.ball.getShape().getBottomSide() > this.canvas.getHeight()) {
         this.ball.speedY = -this.ball.speedY;
       }
+    }
+  }, {
+    key: "reverseBallXDirectionIfContactingPlayer",
+    value: function reverseBallXDirectionIfContactingPlayer() {
+      if (this.ball.getShape().getLeftSide() < this.player1.getShape().getRightSide()) {
+        if (this.ball.getShape().getTopSide() > this.player1.getShape().getBottomSide()) {
+          return;
+        }
 
-      var timeDiff = lifeCycleMs - this.lastTimestamp;
-      this.lastTimestamp = lifeCycleMs;
-      var adjusted = timeDiff / 1500;
-      this.ball.getShape().x += this.ball.speedX * adjusted;
-      this.ball.getShape().y += this.ball.speedY * adjusted;
+        if (this.ball.getShape().getBottomSide() < this.player1.getShape().getTopSide()) {
+          return;
+        }
+
+        if (this.ball.speedX > 0) {
+          return;
+        }
+
+        this.ball.speedX = -this.ball.speedX;
+      }
+
+      if (this.ball.getShape().getRightSide() > this.player2.getShape().getLeftSide()) {
+        if (this.ball.getShape().getTopSide() > this.player2.getShape().getBottomSide()) {
+          return;
+        }
+
+        if (this.ball.getShape().getBottomSide() < this.player2.getShape().getTopSide()) {
+          return;
+        }
+
+        if (this.ball.speedX < 0) {
+          return;
+        }
+
+        this.ball.speedX = -this.ball.speedX;
+      }
+    }
+  }, {
+    key: "updatePlayer2Position",
+    value: function updatePlayer2Position() {
+      this.player2.setLocation(this.player2.getShape().x, this.ball.getShape().y - this.player2.getShape().yOffset / 2);
     }
   }, {
     key: "buildCanvas",
     value: function buildCanvas(canvasId) {
+      var _this2 = this;
+
       var canvasElement = document.getElementById(canvasId);
+
+      document.body.onkeydown = function (e) {
+        if (e.key === 'ArrowUp') {
+          _this2.player1.setLocation(_this2.player1.getShape().x, _this2.player1.getShape().y - 55);
+        }
+
+        if (e.key === 'ArrowDown') {
+          _this2.player1.setLocation(_this2.player1.getShape().x, _this2.player1.getShape().y + 55);
+        }
+      };
 
       if (!canvasElement) {
         throw new Error('Canvas Element not found');
@@ -451,10 +720,16 @@ function () {
       return new Canvas_1.default(canvasElement);
     }
   }, {
+    key: "buildCenterLine",
+    value: function buildCenterLine() {
+      var centerLine = index_3.default.fromDimensions(this.canvas.getWidthCenterPx() - 3, 0, 3, this.canvas.getHeight());
+      this.canvas.drawRect(centerLine);
+    }
+  }, {
     key: "buildBall",
     value: function buildBall() {
-      var location = new Rectangle_1.default(new Vector_1.default(this.canvas.getWidthCenterPx(), this.canvas.getHeightCenterPx()), new Vector_1.default(8, 8));
-      var speed = new Vector_1.default(300, 200);
+      var location = new Rectangle_1.default(new Vector_1.default(this.canvas.getWidthCenterPx(), this.canvas.getHeightCenterPx()), new Vector_1.default(12, 12));
+      var speed = new Vector_1.default(500, 600);
       return new index_1.default(location, speed);
     }
   }]);
@@ -463,7 +738,7 @@ function () {
 }();
 
 exports.default = PongGame;
-},{"../../Models/Canvas/Canvas":"lib/Models/Canvas/Canvas.ts","../../Models/PongBall/index":"lib/Models/PongBall/index.ts","../../Models/Rectangle/Rectangle":"lib/Models/Rectangle/Rectangle.ts","../../Models/Vector/Vector":"lib/Models/Vector/Vector.ts"}],"index.ts":[function(require,module,exports) {
+},{"../../Models/Canvas/Canvas":"lib/Models/Canvas/Canvas.ts","../../Models/PongBall/index":"lib/Models/PongBall/index.ts","../../Models/Rectangle/Rectangle":"lib/Models/Rectangle/Rectangle.ts","../../Models/Vector/Vector":"lib/Models/Vector/Vector.ts","../../Models/Player/index":"lib/Models/Player/index.ts","../Builders/RectangleBuilder/index":"lib/Services/Builders/RectangleBuilder/index.ts"}],"index.ts":[function(require,module,exports) {
 "use strict";
 
 var __importDefault = this && this.__importDefault || function (mod) {
@@ -509,7 +784,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "33239" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39697" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
