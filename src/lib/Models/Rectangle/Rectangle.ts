@@ -2,8 +2,8 @@ import Vector from "../Vector/Vector";
 
 class Rectangle {
     public constructor(
-        private location: Vector,
-        private sizeOffset: Vector,
+        private location: Vector = new Vector(),
+        private sizeOffset: Vector = new Vector(),
     ) {}
 
     get x() {
@@ -23,9 +23,15 @@ class Rectangle {
     get xOffset() {
         return this.sizeOffset.x;
     }
+    set xOffset(xOffsetPx: number) {
+        this.sizeOffset.x = xOffsetPx;
+    }
 
     get yOffset() {
         return this.sizeOffset.y;
+    }
+    set yOffset(yOffsetPx) {
+        this.sizeOffset.y = yOffsetPx;
     }
 
     public getRightSide(): number {
