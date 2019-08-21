@@ -581,6 +581,8 @@ function () {
     this.lastTimestamp = 0;
 
     this.draw = function (ms) {
+      console.log(_this.ball.speedX);
+
       _this.drawBall();
 
       _this.drawPlayer(_this.player1);
@@ -598,8 +600,8 @@ function () {
 
     this.canvas = this.buildCanvas(canvasId);
     this.ball = this.buildBall();
-    this.player1 = new index_2.default(index_3.default.fromDimensions(15, 155, 20, 80));
-    this.player2 = new index_2.default(index_3.default.fromDimensions(this.canvas.getRightPx() - 30, 195, 20, 80));
+    this.player1 = new index_2.default(index_3.default.fromDimensions(15, 195, 10, 60));
+    this.player2 = new index_2.default(index_3.default.fromDimensions(this.canvas.getRightPx() - 30, 195, 10, 60));
   }
 
   _createClass(PongGame, [{
@@ -670,7 +672,7 @@ function () {
           return;
         }
 
-        this.ball.speedX = -this.ball.speedX;
+        this.ball.speedX = -(this.ball.speedX - 5);
       }
 
       if (this.ball.getShape().getRightSide() > this.player2.getShape().getLeftSide()) {
@@ -686,7 +688,7 @@ function () {
           return;
         }
 
-        this.ball.speedX = -this.ball.speedX;
+        this.ball.speedX = -(this.ball.speedX + 5);
       }
     }
   }, {
@@ -703,10 +705,18 @@ function () {
 
       document.body.onkeydown = function (e) {
         if (e.key === 'ArrowUp') {
+          if (_this2.player1.getShape().getTopSide() < 0) {
+            return;
+          }
+
           _this2.player1.setLocation(_this2.player1.getShape().x, _this2.player1.getShape().y - 55);
         }
 
         if (e.key === 'ArrowDown') {
+          if (_this2.player1.getShape().getBottomSide() > _this2.canvas.getHeight()) {
+            return;
+          }
+
           _this2.player1.setLocation(_this2.player1.getShape().x, _this2.player1.getShape().y + 55);
         }
       };
@@ -784,7 +794,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "39697" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46629" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
