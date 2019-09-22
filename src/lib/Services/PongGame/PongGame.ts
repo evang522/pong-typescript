@@ -125,7 +125,7 @@ class PongGame
         }
     }
 
-    private updatePlayer2Position() 
+    private updatePlayer2Position(): void
     {
         this.player2.setLocation(this.player2.getShape().x, this.ball.getShape().y - (this.player2.getShape().yOffset / 2));
     }
@@ -135,7 +135,7 @@ class PongGame
     private buildCanvas(canvasId: string): Canvas 
     {
         const canvasElement = document.getElementById(canvasId) as HTMLCanvasElement;
-        document.body.onkeydown = (e) => 
+        document.body.onkeydown = (e): void => 
         {
             if (e.key === 'ArrowUp') 
             {
@@ -165,7 +165,7 @@ class PongGame
         return new Canvas(canvasElement);
     }
 
-    public draw = (ms?: number) => 
+    public draw = (ms?: number): void => 
     {
         console.log(this.ball.speedX)
         this.drawBall();
@@ -177,13 +177,13 @@ class PongGame
         window.requestAnimationFrame(this.draw);
     }
 
-    private buildCenterLine() 
+    private buildCenterLine(): void
     {
         const centerLine = RectangleBuilder.fromDimensions(this.canvas.getWidthCenterPx() - 3, 0, 3, this.canvas.getHeight());
         this.canvas.drawRect(centerLine);
     }
 
-    private buildBall() 
+    private buildBall(): PongBall
     {
         const location = new Rectangle(
             new Vector( this.canvas.getWidthCenterPx(),  this.canvas.getHeightCenterPx()),
