@@ -48,56 +48,56 @@ class PongGame {
     }
 
     private reverseBallDirectionIfOutOfBounds() {
-        if (this.ball.getShape().getLeftSide() < this.canvas.getLeftPx()) {
+        if (this.ball.getShape().getLeftSide() <= this.canvas.getLeftPx()) {
             // this.ball.speedX = -this.ball.speedX;
             this.ball.speedX = 0
             this.ball.speedY = 0
         }
         
-        if (this.ball.getShape().getRightSide() > this.canvas.getRightPx()) {
+        if (this.ball.getShape().getRightSide() >= this.canvas.getRightPx()) {
             // this.ball.speedX = -this.ball.speedX;
             this.ball.speedX = 0
             this.ball.speedY = 0
         }
         
-        if (this.ball.getShape().getTopSide() < 0) {
+        if (this.ball.getShape().getTopSide() <= 0) {
             this.ball.speedY = -this.ball.speedY;
         }
-        if (this.ball.getShape().getBottomSide() > this.canvas.getHeight())  {
+        if (this.ball.getShape().getBottomSide() >= this.canvas.getHeight())  {
             this.ball.speedY = -this.ball.speedY;
         }
     }
 
     private reverseBallXDirectionIfContactingPlayer() {
-        if (this.ball.getShape().getLeftSide() < this.player1.getShape().getRightSide()) {
+        if (this.ball.getShape().getLeftSide() <= this.player1.getShape().getRightSide()) {
             
-            if (this.ball.getShape().getTopSide() > this.player1.getShape().getBottomSide()) {
+            if (this.ball.getShape().getTopSide() >= this.player1.getShape().getBottomSide()) {
                 return;
             } 
 
-            if (this.ball.getShape().getBottomSide() < this.player1.getShape().getTopSide()) {
+            if (this.ball.getShape().getBottomSide() <= this.player1.getShape().getTopSide()) {
                 return;
             }
 
 
-            if (this.ball.speedX > 0) {
+            if (this.ball.speedX >= 0) {
                 return;
             }
 
             this.ball.speedX = -(this.ball.speedX - 5);
         }
 
-        if (this.ball.getShape().getRightSide() > this.player2.getShape().getLeftSide()) {
+        if (this.ball.getShape().getRightSide() >= this.player2.getShape().getLeftSide()) {
             
-            if (this.ball.getShape().getTopSide() > this.player2.getShape().getBottomSide()) {
+            if (this.ball.getShape().getTopSide() >= this.player2.getShape().getBottomSide()) {
                 return;
             } 
 
-            if (this.ball.getShape().getBottomSide() < this.player2.getShape().getTopSide()) {
+            if (this.ball.getShape().getBottomSide() <=this.player2.getShape().getTopSide()) {
                 return;
             }
 
-            if (this.ball.speedX < 0) {
+            if (this.ball.speedX <= 0) {
                 return;
             }
 
@@ -115,13 +115,13 @@ class PongGame {
         const canvasElement = document.getElementById(canvasId) as HTMLCanvasElement;
         document.body.onkeydown = (e) => {
             if (e.key === 'ArrowUp') {
-                if (this.player1.getShape().getTopSide() < 0) {
+                if (this.player1.getShape().getTopSide() <= 0) {
                     return;
                 }
                 this.player1.setLocation(this.player1.getShape().x, this.player1.getShape().y - 55);
             }
             if (e.key === 'ArrowDown') {
-                if (this.player1.getShape().getBottomSide() > this.canvas.getHeight()) {
+                if (this.player1.getShape().getBottomSide() >= this.canvas.getHeight()) {
                     return;
                 }
                 this.player1.setLocation(this.player1.getShape().x, this.player1.getShape().y + 55);
