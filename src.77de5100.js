@@ -137,20 +137,20 @@ function () {
     _classCallCheck(this, Canvas);
 
     this.canvas = canvas;
-    this.setDrawColor('white');
+    this.setDrawColor("white");
   }
 
   _createClass(Canvas, [{
     key: "clear",
     value: function clear() {
-      this.setDrawColor('black');
+      this.setDrawColor("black");
       this.get2dContext().fillRect(0, 0, this.getRightPx(), this.getHeight());
-      this.setDrawColor('white');
+      this.setDrawColor("white");
     }
   }, {
     key: "get2dContext",
     value: function get2dContext() {
-      return this.canvas.getContext('2d');
+      return this.canvas.getContext("2d");
     }
   }, {
     key: "setDrawColor",
@@ -494,12 +494,14 @@ function () {
     key: "setSpeed",
     value: function setSpeed(speedX, speedY) {
       this.speed = new Vector_1.default(speedX, speedY);
+      return this;
     }
   }, {
     key: "setLocation",
     value: function setLocation(x, y) {
       this.shape.x = x;
       this.shape.y = y;
+      return this;
     }
   }, {
     key: "getShape",
@@ -636,55 +638,55 @@ function () {
   }, {
     key: "reverseBallDirectionIfOutOfBounds",
     value: function reverseBallDirectionIfOutOfBounds() {
-      if (this.ball.getShape().getLeftSide() < this.canvas.getLeftPx()) {
+      if (this.ball.getShape().getLeftSide() <= this.canvas.getLeftPx()) {
         // this.ball.speedX = -this.ball.speedX;
         this.ball.speedX = 0;
         this.ball.speedY = 0;
       }
 
-      if (this.ball.getShape().getRightSide() > this.canvas.getRightPx()) {
+      if (this.ball.getShape().getRightSide() >= this.canvas.getRightPx()) {
         // this.ball.speedX = -this.ball.speedX;
         this.ball.speedX = 0;
         this.ball.speedY = 0;
       }
 
-      if (this.ball.getShape().getTopSide() < 0) {
+      if (this.ball.getShape().getTopSide() <= 0 && this.ball.speedY < 0) {
         this.ball.speedY = -this.ball.speedY;
       }
 
-      if (this.ball.getShape().getBottomSide() > this.canvas.getHeight()) {
+      if (this.ball.getShape().getBottomSide() >= this.canvas.getHeight() && this.ball.speedY > 0) {
         this.ball.speedY = -this.ball.speedY;
       }
     }
   }, {
     key: "reverseBallXDirectionIfContactingPlayer",
     value: function reverseBallXDirectionIfContactingPlayer() {
-      if (this.ball.getShape().getLeftSide() < this.player1.getShape().getRightSide()) {
-        if (this.ball.getShape().getTopSide() > this.player1.getShape().getBottomSide()) {
+      if (this.ball.getShape().getLeftSide() <= this.player1.getShape().getRightSide()) {
+        if (this.ball.getShape().getTopSide() >= this.player1.getShape().getBottomSide()) {
           return;
         }
 
-        if (this.ball.getShape().getBottomSide() < this.player1.getShape().getTopSide()) {
+        if (this.ball.getShape().getBottomSide() <= this.player1.getShape().getTopSide()) {
           return;
         }
 
-        if (this.ball.speedX > 0) {
+        if (this.ball.speedX >= 0) {
           return;
         }
 
         this.ball.speedX = -(this.ball.speedX - 5);
       }
 
-      if (this.ball.getShape().getRightSide() > this.player2.getShape().getLeftSide()) {
-        if (this.ball.getShape().getTopSide() > this.player2.getShape().getBottomSide()) {
+      if (this.ball.getShape().getRightSide() >= this.player2.getShape().getLeftSide()) {
+        if (this.ball.getShape().getTopSide() >= this.player2.getShape().getBottomSide()) {
           return;
         }
 
-        if (this.ball.getShape().getBottomSide() < this.player2.getShape().getTopSide()) {
+        if (this.ball.getShape().getBottomSide() <= this.player2.getShape().getTopSide()) {
           return;
         }
 
-        if (this.ball.speedX < 0) {
+        if (this.ball.speedX <= 0) {
           return;
         }
 
@@ -705,7 +707,7 @@ function () {
 
       document.body.onkeydown = function (e) {
         if (e.key === 'ArrowUp') {
-          if (_this2.player1.getShape().getTopSide() < 0) {
+          if (_this2.player1.getShape().getTopSide() <= 0) {
             return;
           }
 
@@ -713,7 +715,7 @@ function () {
         }
 
         if (e.key === 'ArrowDown') {
-          if (_this2.player1.getShape().getBottomSide() > _this2.canvas.getHeight()) {
+          if (_this2.player1.getShape().getBottomSide() >= _this2.canvas.getHeight()) {
             return;
           }
 
@@ -794,7 +796,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "46629" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "42891" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
