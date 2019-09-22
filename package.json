@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel serve --out-dir devDist ./src/index.html",
-    "build": "parcel --public-url https://evanhgarrett.com/pong-typescript/  build ./src/index.html",
-    "deploy": "gh-pages -d dist"
+    "build": "npm run lint && parcel --public-url https://evanhgarrett.com/pong-typescript/  build ./src/index.html",
+    "deploy": "npm run lint && gh-pages -d dist",
+    "lint": "eslint 'src/**'",
+    "lint-fix": "eslint --fix 'src/**'"
   },
   "repository": {
     "type": "git",
@@ -23,6 +25,13 @@
     "gh-pages": "^2.1.1",
     "parcel-bundler": "^1.12.3",
     "typescript": "^3.5.3",
-    "typescript-tslint-plugin": "^0.5.4"
-  }
+    "typescript-tslint-plugin": "^0.5.4",
+    "@typescript-eslint/eslint-plugin": "^2.3.0",
+    "@typescript-eslint/parser": "^2.3.0",
+    "eslint": "^6.4.0",
+    "eslint-config-prettier": "^6.3.0",
+    "eslint-plugin-prettier": "^3.1.1",
+    "prettier": "^1.18.2"
+  },
+  "dependencies": {}
 }
